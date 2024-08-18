@@ -2,6 +2,9 @@ name: docker build
 
 on:
   push:
+    schedule:
+      # every 2nd month at 2 AM on the 24th
+      - cron: "0 2 24 */2 *"
     branches:
     - "**"
     tags:
