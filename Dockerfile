@@ -19,7 +19,11 @@ RUN JEMALLOC_BDIR=$(mktemp -d) && \
     git clone --depth 1 https://github.com/jemalloc/jemalloc $JEMALLOC_BDIR && \
     cd $JEMALLOC_BDIR && \
     ./autogen.sh && \
-    ./configure --with-lg-page=14 && \
+    arch=$(dpkg --print-architecture) && \
+    if [[ $arch == amd64 ]]; then ./configure --with-lg-page=21 --with-lg-hugepage=21 --with-lg-quantum=6; \
+    elif [[ $arch == aarch64 ]]; then ./configure --with-lg-page=14; \
+    else ./configure; \
+    fi && \
     make -j$(nproc) && \
     make install && \
     rm -rf $JEMALLOC_BDIR
