@@ -20,7 +20,7 @@ RUN JEMALLOC_BDIR=$(mktemp -d) && \
     cd $JEMALLOC_BDIR && \
     ./autogen.sh && \
     arch=$(dpkg --print-architecture) && \
-    if [[ $arch == amd64 ]]; then ./configure; \
+    if [[ $arch == amd64 ]]; then ./configure --with-lg-page=21 --with-lg-hugepage=21 --with-lg-quantum=6; \
     elif [[ $arch == aarch64 ]]; then ./configure --with-lg-page=14; \
     else ./configure; \
     fi && \
